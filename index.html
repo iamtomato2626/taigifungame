@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>台語打字大冒險 - 參考教育部臺灣台語常用詞辭典製作學習遊戲</title>
+<style>
+  /* 引入台灣開源「jf open 粉圓體」 */
+  @font-face {
+    font-family: 'jf-openhuninn';
+    src: url('https://cdn.jsdelivr.net/gh/justfont/open-huninn-font@master/font/jf-openhuninn-2.0.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/justfont/open-huninn-font@master/font/jf-openhuninn-2.0.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* 預設淺色主題：晨曦暖陽 */
+  :root, [data-theme="warm"] {
+    --bg-grad: linear-gradient(135deg, #fdfbfb 0%, #f3efe6 100%);
+    --header-bg: rgba(255, 255, 255, 0.94);
+    --card-bg: #ffffff;
+    --sub-card-bg: #f8f6f0;
+    --border-color: #e2d9c8;
+    --primary: #d97706;
+    --primary-hover: #b45309;
+    --secondary-btn: #ede7db;
+    --secondary-text: #44403c;
+    --text-main: #292524;
+    --text-muted: #6b645c;
+    --danger: #dc2626;
+    --success: #16a34a;
+    --canvas-grad-top: #fef3c7;
+    --canvas-grad-bot: #fde68a;
+    --disabled-bg: #f1f5f9;
+    --disabled-text: #94a3b8;
+    --hp-track-bg: #e5e7eb;
+    --overlay-bg: rgba(255, 255, 255, 0.86);
+  }
+
+  /* 淺色主題 2：弈靜專屬 (#CA8EFF) */
+  [data-theme="yijing"] {
+    --bg-grad: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+    --header-bg: rgba(255, 255, 255, 0.94);
+    --card-bg: #ffffff;
+    --sub-card-bg: #fbf7ff;
+    --border-color: #e4c7ff;
+    --primary: #CA8EFF;
+    --primary-hover: #b366f7;
+    --secondary-btn: #f3e8ff;
+    --secondary-text: #581c87;
+    --text-main: #2e1065;
+    --text-muted: #6b21a8;
+    --danger: #e11d48;
+    --success: #16a34a;
+    --canvas-grad-top: #faf5ff;
+    --canvas-grad-bot: #ebd4ff;
+    --disabled-bg: #f3e8ff;
+    --disabled-text: #a855f7;
+    --hp-track-bg: #e5e7eb;
+    --overlay-bg: rgba(255, 255, 255, 0.86);
+  }
+
+  /* 淺色主題 3：森林薄荷 */
+  [data-theme="mint"] {
+    --bg-grad: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    --header-bg: rgba(255, 255, 255, 0.94);
+    --card-bg: #ffffff;
+    --sub-card-bg: #f2fbf5;
+    --border-color: #bbf7d0;
+    --primary: #059669;
+    --primary-hover: #047857;
+    --secondary-btn: #d1fae5;
+    --secondary-text: #064e3b;
+    --text-main: #1e293b;
+    --text-muted: #475569;
+    --danger: #e11d48;
+    --success: #16a34a;
+    --canvas-grad-top: #ecfdf5;
+    --canvas-grad-bot: #a7f3d0;
+    --disabled-bg: #f1f5f9;
+    --disabled-text: #94a3b8;
+    --hp-track-bg: #e5e7eb;
+    --overlay-bg: rgba(255, 255, 255, 0.86);
+  }
+
+  /* 淺色主題 4：櫻花粉彩 */
+  [data-theme="sakura"] {
+    --bg-grad: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+    --header-bg: rgba(255, 255, 255, 0.94);
+    --card-bg: #ffffff;
+    --sub-card-bg: #fff5f6;
+    --border-color: #fecdd3;
+    --primary: #e11d48;
+    --primary-hover: #be123c;
+    --secondary-btn: #ffe4e6;
+    --secondary-text: #881337;
+    --text-main: #27272a;
+    --text-muted: #52525b;
+    --danger: #dc2626;
+    --success: #15803d;
+    --canvas-grad-top: #fff1f2;
+    --canvas-grad-bot: #fecdd3;
+    --disabled-bg: #f1f5f9;
+    --disabled-text: #94a3b8;
+    --hp-track-bg: #e5e7eb;
+    --overlay-bg: rgba(255, 255, 255, 0.86);
+  }
+
+  /* 淺色主題 5：晴空蔚藍 */
+  [data-theme="sky"] {
+    --bg-grad: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    --header-bg: rgba(255, 255, 255, 0.94);
+    --card-bg: #ffffff;
+    --sub-card-bg: #f4faff;
+    --border-color: #bae6fd;
+    --primary: #0284c7;
+    --primary-hover: #0369a1;
+    --secondary-btn: #e0f2fe;
+    --secondary-text: #0c4a6e;
+    --text-main: #1e293b;
+    --text-muted: #475569;
+    --danger: #dc2626;
+    --success: #16a34a;
+    --canvas-grad-top: #f0f9ff;
+    --canvas-grad-bot: #bae6fd;
+    --disabled-bg: #f1f5f9;
+    --disabled-text: #94a3b8;
+    --hp-track-bg: #e5e7eb;
+    --overlay-bg: rgba(255, 255, 255, 0.86);
+  }
+
+  /* 深色主題 6：星空深色 */
+  [data-theme="dark"] {
+    --bg-grad: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    --header-bg: rgba(15, 23, 42, 0.94);
+    --card-bg: #1e293b;
+    --sub-card-bg: #0f172a;
+    --border-color: #334155;
+    --primary: #f59e0b;
+    --primary-hover: #d97706;
+    --secondary-btn: #334155;
+    --secondary-text: #f1f5f9;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --danger: #f87171;
+    --success: #4ade80;
+    --canvas-grad-top: #090d16;
+    --canvas-grad-bot: #1e293b;
+    --disabled-bg: #1e293b;
+    --disabled-text: #64748b;
+    --hp-track-bg: #334155;
+    --overlay-bg: rgba(15, 23, 42, 0.88);
+  }
+
+  /* 全站套用粉圓體 */
+  * { box-sizing: border-box; font-family: 'jf-openhuninn', "Microsoft JhengHei", "Noto Sans TC", sans-serif; }
+  body {
+    margin: 0; padding: 0; background: var(--bg-grad);
+    color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+    transition: background 0.3s, color 0.3s;
+  }
+  header {
+    width: 100%; padding: 12px 24px; background: var(--header-bg);
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;
+    border-bottom: 2px solid var(--border-color); box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  header h1 { margin: 0; font-size: 1.4rem; color: var(--primary); letter-spacing: 1px; text-shadow: 0 1px 1px rgba(0,0,0,0.06); }
+  .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .theme-picker {
+    display: flex; align-items: center; gap: 6px; background: var(--sub-card-bg);
+    padding: 5px 10px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.9rem;
+  }
+  .theme-picker select {
+    padding: 4px 6px; font-size: 0.9rem; border: 1px solid var(--border-color);
+    background: var(--card-bg); color: var(--text-main); width: auto;
+  }
+
+  .btn {
+    background: var(--primary); color: #ffffff; border: none; padding: 10px 16px;
+    border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.96rem; transition: 0.2s;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2); touch-action: manipulation;
+  }
+  .btn:hover:not(:disabled) { transform: translateY(-2px); background: var(--primary-hover); }
+  .btn:disabled { background: var(--disabled-bg); color: var(--disabled-text); border: 1px solid var(--border-color); cursor: not-allowed; text-shadow: none; transform: none; }
+  .btn-lg { padding: 13px 28px; font-size: 1.15rem; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.16); }
+  .btn-secondary { background: var(--secondary-btn); color: var(--secondary-text); border: 1px solid var(--border-color); text-shadow: none; }
+  .btn-secondary:hover { background: var(--border-color); }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-danger:hover { filter: brightness(0.9); }
+
+  .container { width: 95%; max-width: 1040px; margin: 18px auto; flex: 1; }
+  .screen {
+    display: none; background: var(--card-bg); padding: 22px; border-radius: 16px;
+    border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+  .screen.active { display: block; }
+
+  /* 主題選擇橫幅 */
+  .topic-selector-box {
+    background: var(--sub-card-bg); border: 2px solid var(--primary); border-radius: 12px;
+    padding: 16px 18px; margin-bottom: 20px;
+  }
+  .topic-selector-box h3 { margin: 0 0 12px 0; color: var(--primary); font-size: 1.12rem; }
+  .topic-pills { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+  .topic-pill {
+    background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 10px;
+    padding: 11px 14px; cursor: pointer; transition: 0.2s; text-align: left;
+  }
+  .topic-pill:hover { border-color: var(--primary); }
+  .topic-pill.selected {
+    border-color: var(--primary); background: var(--secondary-btn);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  }
+  .topic-pill strong { display: block; font-size: 1.05rem; color: var(--text-main); margin-bottom: 4px; }
+  .topic-pill span { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* 大廳模式卡片 */
+  .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+  .mode-card {
+    background: var(--sub-card-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 18px;
+    display: flex; flex-direction: column; justify-content: space-between; transition: 0.25s;
+  }
+  .mode-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+  .mode-card.disabled-card { opacity: 0.72; border-style: dashed; }
+  .mode-card.disabled-card:hover { transform: none; border-color: var(--border-color); }
+  .mode-card h3 { color: var(--primary); margin-top: 0; font-size: 1.22rem; }
+  .mode-card p { color: var(--text-muted); font-size: 0.94rem; line-height: 1.6; }
+  .sub-options { margin: 12px 0; display: flex; flex-direction: column; gap: 6px; }
+  select, input[type="text"] {
+    padding: 10px 12px; border-radius: 8px; border: 2px solid var(--border-color);
+    background: var(--card-bg); color: var(--text-main); font-size: 16px; width: 100%;
+  }
+  input[type="text"]:focus, select:focus { outline: none; border-color: var(--primary); }
+  input[type="text"]:disabled { background: var(--disabled-bg); color: var(--disabled-text); cursor: not-allowed; }
+
+  /* 手機專屬提示標籤 */
+  .mobile-only-notice {
+    display: none;
+    background: rgba(220, 38, 38, 0.12);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 8px;
+  }
+
+  /* 血條與狀態列 */
+  .status-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
+  .hp-box { flex: 1; min-width: 210px; background: var(--sub-card-bg); padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border-color); }
+  .hp-label { display: flex; justify-content: space-between; margin-bottom: 6px; font-weight: bold; font-size: 0.95rem; }
+  .hp-track { width: 100%; height: 15px; background: var(--hp-track-bg); border-radius: 8px; overflow: hidden; }
+  .hp-fill { height: 100%; background: var(--success); transition: width 0.3s; }
+  .hp-fill.boss { background: var(--danger); }
+
+  /* 題目區 */
+  .question-box {
+    background: var(--sub-card-bg); border: 2px solid var(--primary); border-radius: 12px;
+    padding: 22px 16px; text-align: center; margin: 16px 0;
+  }
+  .q-tag {
+    display: inline-block; background: var(--secondary-btn); color: var(--secondary-text);
+    border: 1px solid var(--border-color); padding: 4px 12px; border-radius: 20px; font-size: 0.86rem; font-weight: bold; margin-bottom: 8px;
+  }
+  .q-main { font-size: 2.05rem; font-weight: bold; margin: 10px 0; color: var(--text-main); word-break: break-word; }
+  .q-desc { color: var(--text-muted); font-size: 0.98rem; max-width: 700px; margin: 0 auto; line-height: 1.55; }
+  .feedback { margin-top: 12px; font-weight: bold; min-height: 24px; font-size: 1.02rem; }
+  .input-action-row {
+    display: flex; gap: 8px; max-width: 480px; margin: 18px auto 0 auto;
+  }
+
+  /* 人機競速區 */
+  .vs-top-bar {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
+    background: var(--sub-card-bg); padding: 14px 18px; border-radius: 12px; border: 2px solid var(--border-color);
+    margin-bottom: 16px;
+  }
+  .timer-badge { font-size: 1.35rem; font-weight: bold; color: var(--primary); }
+  .versus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .player-pane { background: var(--sub-card-bg); padding: 16px; border-radius: 12px; border: 2px solid var(--border-color); }
+
+  /* 雙人合作顯眼目標任務卡 */
+  .coop-target-card {
+    background: var(--card-bg);
+    border: 3.5px solid var(--primary);
+    border-radius: 14px;
+    padding: 14px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .coop-word-showcase { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .target-label-pill {
+    background: var(--primary); color: #ffffff; font-weight: bold;
+    padding: 6px 12px; border-radius: 8px; font-size: 0.92rem; letter-spacing: 1px;
+  }
+  .target-word-big {
+    font-size: 1.85rem; font-weight: 900; color: var(--text-main);
+    background: var(--secondary-btn); padding: 4px 16px; border-radius: 10px; border: 2px dashed var(--primary);
+  }
+  .target-desc-pill { font-size: 0.98rem; color: var(--text-muted); font-weight: bold; }
+  .catch-badges { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .catch-badge {
+    padding: 8px 14px; border-radius: 10px; font-size: 1rem; font-weight: bold;
+    border: 2px solid var(--border-color); background: var(--sub-card-bg); transition: 0.25s;
+  }
+  .catch-badge.done {
+    background: rgba(22, 163, 74, 0.18); border-color: var(--success); color: var(--success); transform: scale(1.04);
+  }
+
+  /* 雙人合作 Canvas 與點擊開始遮罩 */
+  .canvas-wrapper {
+    position: relative; width: 100%; max-width: 860px; margin: 0 auto;
+    border-radius: 12px; overflow: hidden; border: 3px solid var(--primary);
+  }
+  #coopCanvas {
+    background: linear-gradient(180deg, var(--canvas-grad-top) 0%, var(--canvas-grad-bot) 100%);
+    display: block; width: 100%; height: 440px;
+  }
+  .canvas-start-overlay {
+    position: absolute; inset: 0; background: var(--overlay-bg); backdrop-filter: blur(3px);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    cursor: pointer; text-align: center; padding: 20px; transition: opacity 0.25s;
+  }
+  .pulse-prompt {
+    font-size: 1.65rem; font-weight: 900; color: var(--primary); background: var(--card-bg);
+    border: 3px solid var(--primary); padding: 15px 28px; border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.16); animation: pulseAnim 1.5s infinite;
+  }
+  @keyframes pulseAnim {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  /* 歷史紀錄表格 */
+  table { width: 100%; border-collapse: collapse; margin-top: 15px; min-width: 580px; }
+  th, td { padding: 11px 10px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 0.94rem; }
+  th { background: var(--sub-card-bg); color: var(--primary); }
+  .badge-win { background: rgba(22, 163, 74, 0.18); color: var(--success); border: 1px solid var(--success); padding: 3px 8px; border-radius: 6px; font-weight: bold; font-size: 0.84rem; }
+  .badge-lose { background: rgba(220, 38, 38, 0.18); color: var(--danger); border: 1px solid var(--danger); padding: 3px 8px; border-radius: 6px; font-weight: bold; font-size: 0.84rem; }
+
+  /* ==================== 手機版面響應式適配 (<= 768px) ==================== */
+  @media (max-width: 768px) {
+    header { padding: 10px 14px; justify-content: center; text-align: center; }
+    header h1 { font-size: 1.25rem; width: 100%; }
+    .header-controls { justify-content: center; width: 100%; }
+    .container { width: 96%; margin: 12px auto; }
+    .screen { padding: 15px; border-radius: 12px; }
+    .topic-pills { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .topic-pill { padding: 10px; }
+    .topic-pill strong { font-size: 0.96rem; }
+    .topic-pill span { font-size: 0.78rem; }
+    .mode-grid { grid-template-columns: 1fr; }
+    .versus-grid { grid-template-columns: 1fr; }
+    .q-main { font-size: 1.65rem; }
+    .timer-badge { font-size: 1.15rem; }
+    .btn-lg { width: 100%; padding: 12px; font-size: 1.08rem; }
+    .mobile-only-notice { display: block; }
+  }
+  @media (max-width: 420px) {
+    .topic-pills { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body data-theme="warm">
+
+<header>
+  <h1>🌤️ 台語打字大冒險</h1>
+  <div class="header-controls">
+    <div class="theme-picker">
+      <span>🎨 配色：</span>
+      <select id="themeSelect" onchange="changeTheme(this.value)">
+        <option value="warm">☀️ 晨曦暖陽（淺米）</option>
+        <option value="yijing">💜 弈靜專屬（淺紫）</option>
+        <option value="mint">🌿 森林薄荷（淺綠）</option>
+        <option value="sakura">🌸 櫻花粉彩（淺粉）</option>
+        <option value="sky">🌊 晴空蔚藍（淺藍）</option>
+        <option value="dark">🌙 星空深色（深色）</option>
+      </select>
+    </div>
+    <button class="btn btn-secondary" onclick="showScreen('lobby')">🏠 大廳</button>
+    <button class="btn" onclick="openHistory()">📜 歷程紀錄</button>
+  </div>
+</header>
+
+<div class="container">
+  <!-- 1. 主大廳 -->
+  <div id="lobby" class="screen active">
+    <!-- 第一步：選擇題庫主題 -->
+    <div class="topic-selector-box">
+      <h3>第一步：請先選擇辭典學習主題（教育部台語辭典）</h3>
+      <div class="topic-pills" id="topicPills">
+        <div class="topic-pill selected" data-topic="天文地理" onclick="selectTopic('天文地理')">
+          <strong>🌌 主題一：天文地理</strong>
+          <span>日頭、貓霧仔光、漉糊糜、漚鬱熱、外埠頭...</span>
+        </div>
+        <div class="topic-pill" data-topic="生活" onclick="selectTopic('生活')">
+          <strong>⏳ 主題二：生活</strong>
+          <span>安穩、五月節、顧三頓、賴賴趖、四界趖...</span>
+        </div>
+        <div class="topic-pill" data-topic="動物" onclick="selectTopic('動物')">
+          <strong>🐾 主題三：動物</strong>
+          <span>杜蚓仔、𧌄蜅蠐、白翎鷥、膨鼠、麒麟鹿...</span>
+        </div>
+        <div class="topic-pill" data-topic="全部混合" onclick="selectTopic('全部混合')">
+          <strong>🎲 綜合大挑戰（全主題）</strong>
+          <span>隨機混合天文地理、生活與動物詞彙</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第二步：選擇遊戲模式 -->
+    <h3 style="margin-top:0; color:var(--text-main);">第二步：選擇遊玩模式（目前題庫：<span id="currentTopicBadge" style="color:var(--primary);">天文地理</span>）</h3>
+    <div class="mode-grid">
+      <!-- 模式一 -->
+      <div class="mode-card">
+        <div>
+          <h3>⚔️ 模式一：單人 RPG 通關</h3>
+          <p>需<strong>答對 10 題</strong>才能擊敗魔王通關！每答對 1 題扣魔王 10 血，答錯扣自己 20 血（最多容錯 4 次）。</p>
+          <div class="sub-options">
+            <label><strong>選擇挑戰魔王：</strong></label>
+            <select id="rpgBossSelect">
+              <option value="hanzi">漢字魔王（看拼音/釋義 ➔ 輸入台語漢字）</option>
+              <option value="pinyin">拼音魔王（看漢字/釋義 ➔ 輸入臺羅拼音）</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn" onclick="startRPG()">開始單人討伐 (10題通關)</button>
+      </div>
+
+      <!-- 模式二：人機對抗 -->
+      <div class="mode-card">
+        <div>
+          <h3>⚡ 模式二：機器人限時對抗</h3>
+          <p>限時 3 分鐘與 AI 機器人競速！按下「開始對戰」才計時，最終計分以「拼音正確率」為核心權重判定輸贏。</p>
+          <div class="sub-options">
+            <label><strong>選擇機器人難度：</strong></label>
+            <select id="versusOpponent">
+              <option value="bot-easy">🤖 機器人 - 簡單（新手學徒）</option>
+              <option value="bot-med">🤖 機器人 - 中等（在地鄉親）</option>
+              <option value="bot-hard">🤖 機器人 - 困難（台語博士）</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn" onclick="prepareVersus()">前往對戰準備室</button>
+      </div>
+
+      <!-- 模式三：雙人合作打怪（僅限電腦鍵盤） -->
+      <div class="mode-card" id="coopModeCard">
+        <div>
+          <h3>🤝 模式三：雙人合作打怪</h3>
+          <p>需合力接住<strong>10 組目標詞彙</strong>（漢字＋拼音）才能討伐巨獸！共有 5 顆愛心，接錯 5 次即結束。</p>
+          <div class="sub-options">
+            <small style="color:var(--primary); font-weight:bold;">💻 電腦雙人鍵盤：P1 (A / D 鍵) ｜ P2 (← / → 鍵)</small>
+            <div class="mobile-only-notice">📱 偵測到手機/小螢幕裝置：此模式需雙人操作實體鍵盤，請使用電腦版開啟遊玩。</div>
+          </div>
+        </div>
+        <button class="btn" id="coopStartLobbyBtn" onclick="prepareCoop()">前往合作戰場 (10題通關)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 單人 RPG 畫面 -->
+  <div id="rpgScreen" class="screen">
+    <div class="status-bar">
+      <div class="hp-box">
+        <div class="hp-label"><span>🛡️ 勇者 (你)</span><span id="rpgPlayerHpText">100 / 100</span></div>
+        <div class="hp-track"><div id="rpgPlayerHpBar" class="hp-fill" style="width:100%"></div></div>
+      </div>
+      <div style="font-size:1.3rem; font-weight:bold; color:var(--primary);">VS</div>
+      <div class="hp-box">
+        <div class="hp-label"><span id="rpgBossName">👹 漢字魔王</span><span id="rpgBossHpText">100 / 100 (還需10題)</span></div>
+        <div class="hp-track"><div id="rpgBossHpBar" class="hp-fill boss" style="width:100%"></div></div>
+      </div>
+    </div>
+
+    <div class="question-box">
+      <div class="q-tag" id="rpgCategory">天文地理</div>
+      <div class="q-main" id="rpgPrompt">jit-thâu</div>
+      <div class="q-desc" id="rpgMeaning">釋義：太陽。</div>
+      <div class="input-action-row">
+        <input type="text" id="rpgInput" placeholder="請輸入答案..." autocomplete="off">
+        <button class="btn" onclick="submitRpgAnswer()">送出</button>
+      </div>
+      <div class="feedback" id="rpgFeedback"></div>
+      <div style="margin-top:10px; font-size:0.85rem; color:var(--text-muted);">
+        💡 拼音提示：支援標準臺羅拼音（如 <code>sit-ji̍t</code>、<code>Gû-nn̂g</code>）或使用數字代替調號（如 <code>sit4-jit8</code>、<code>Gu5-nng5</code>），多音詞任一讀音皆可過關
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 機器人對抗畫面 -->
+  <div id="versusScreen" class="screen">
+    <div class="vs-top-bar">
+      <div class="timer-badge">⏳ 剩餘時間：<span id="vsTimer">03:00</span> ｜ 主題：<span id="vsTopicLabel">天文地理</span></div>
+      <button id="vsStartBtn" class="btn btn-lg" onclick="beginVersusBattle()">🚀 開始 3 分鐘對戰</button>
+    </div>
+
+    <div class="versus-grid">
+      <!-- 玩家 -->
+      <div class="player-pane">
+        <h3 style="margin-top:0; color:var(--success);">👤 挑戰者 (你)</h3>
+        <div>得分：<strong id="vsP1Score">0</strong> ｜ 正確率：<strong id="vsP1Acc">100%</strong> (<span id="vsP1Stats">0/0</span>)</div>
+        <div class="question-box" style="padding:15px; margin:12px 0;">
+          <div class="q-tag" id="vsP1Cat">準備中</div>
+          <div class="q-main" style="font-size:1.6rem;" id="vsP1Prompt">按下「開始對戰」揭曉題目</div>
+          <div class="q-desc" style="font-size:0.9rem;" id="vsP1Desc">請準備好您的輸入法（支援調號或數字調，如 Gu5-nng5）</div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="vsP1Input" placeholder="請先點擊「開始對戰」..." autocomplete="off" disabled>
+          <button id="vsP1SubmitBtn" class="btn" onclick="handleVsSubmit('p1', document.getElementById('vsP1Input').value)" disabled>送出</button>
+        </div>
+        <div class="feedback" id="vsP1Feedback" style="font-size:0.95rem;"></div>
+      </div>
+
+      <!-- 機器人對手 -->
+      <div class="player-pane">
+        <h3 style="margin-top:0; color:var(--primary);" id="vsP2Title">🤖 機器人對手</h3>
+        <div>得分：<strong id="vsP2Score">0</strong> ｜ 正確率：<strong id="vsP2Acc">100%</strong> (<span id="vsP2Stats">0/0</span>)</div>
+        <div class="question-box" style="padding:15px; margin:12px 0;">
+          <div class="q-tag" id="vsP2Cat">準備中</div>
+          <div class="q-main" style="font-size:1.6rem;" id="vsP2Prompt">按下「開始對戰」揭曉題目</div>
+          <div class="q-desc" style="font-size:0.9rem;" id="vsP2Desc">對戰開始後機器人將自動作答</div>
+        </div>
+        <input type="text" id="vsP2Input" placeholder="等待對戰開始..." autocomplete="off" disabled>
+        <div class="feedback" id="vsP2Feedback" style="font-size:0.95rem;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 雙人合作打怪畫面（僅限電腦） -->
+  <div id="coopScreen" class="screen">
+    <div class="status-bar" style="margin-bottom:12px;">
+      <div class="hp-box">
+        <div class="hp-label"><span>❤️ 團隊生命值 (最多錯5次)</span><span id="coopHearts">❤️❤️❤️❤️❤️</span></div>
+      </div>
+      <div class="hp-box">
+        <div class="hp-label"><span>👾 辭典巨獸 HP (需完成10題)</span><span id="coopBossHpText">100 / 100</span></div>
+        <div class="hp-track"><div id="coopBossHpBar" class="hp-fill boss" style="width:100%"></div></div>
+      </div>
+      <div class="hp-box" style="flex:0.65;">
+        <div class="hp-label"><span>🏆 完成題數 / 分數</span><span id="coopScore">0 / 10 題 (0分)</span></div>
+      </div>
+    </div>
+
+    <!-- 超顯眼目標詞彙任務卡 -->
+    <div class="coop-target-card">
+      <div class="coop-word-showcase">
+        <span class="target-label-pill">🎯 本回合必接目標</span>
+        <span class="target-word-big" id="coopTargetText">日頭 ｜ jit-thâu</span>
+        <span class="target-desc-pill" id="coopTargetDesc">釋義：太陽。</span>
+      </div>
+      <div class="catch-badges">
+        <div id="badgeHanzi" class="catch-badge">漢字：待接取 ❌</div>
+        <div id="badgePinyin" class="catch-badge">拼音：待接取 ❌</div>
+      </div>
+    </div>
+
+    <!-- 畫布與點擊任意處開始遮罩 -->
+    <div class="canvas-wrapper">
+      <canvas id="coopCanvas" width="860" height="440"></canvas>
+      <div id="coopStartOverlay" class="canvas-start-overlay" onclick="beginCoopGame()">
+        <div class="pulse-prompt">👆 點擊畫面任意位置開始遊戲</div>
+        <p style="margin-top:16px; font-size:1.1rem; font-weight:bold; color:var(--text-main);">
+          合作接滿 10 組目標詞彙的「漢字」與「拼音」方塊即可擊敗巨獸！
+        </p>
+        <p style="margin:4px 0 0 0; color:var(--text-muted); font-size:0.98rem;">
+          🟢 <strong>P1 玩家</strong>：按 <code>A</code> / <code>D</code> 鍵移動 ｜ 🟠 <strong>P2 玩家</strong>：按 <code>←</code> / <code>→</code> 方向鍵移動
+        </p>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:10px; color:var(--text-muted); font-size:0.95rem;">
+      操作說明：<strong style="color:var(--success);">P1 (綠色戰車)</strong> 使用 <code>A</code> <code>D</code> 鍵移動 ｜ <strong style="color:var(--primary);">P2 (橘色戰車)</strong> 使用 <code>←</code> <code>→</code> 方向鍵移動
+    </div>
+  </div>
+
+  <!-- 5. 遊戲結算畫面 -->
+  <div id="resultScreen" class="screen" style="text-align:center;">
+    <h2 id="resTitle" style="font-size:1.9rem; color:var(--primary);">🎉 挑戰成功！</h2>
+    <p id="resSubtitle" style="font-size:1.05rem; color:var(--text-muted);"></p>
+    <div id="resDetails" style="background:var(--sub-card-bg); border:1px solid var(--border-color); padding:18px; border-radius:12px; max-width:520px; margin:18px auto; line-height:1.85; font-size:1.05rem;"></div>
+    <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+      <button class="btn" onclick="showScreen('lobby')">返回主大廳</button>
+      <button class="btn btn-secondary" onclick="openHistory()">查看所有歷程紀錄</button>
+    </div>
+  </div>
+
+  <!-- 6. 遊玩歷程紀錄畫面 -->
+  <div id="historyScreen" class="screen">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <h2 style="margin:0; font-size:1.35rem;">📜 遊玩歷程與分數紀錄</h2>
+      <button class="btn btn-danger" onclick="clearHistory()">清除紀錄</button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>遊玩時間</th>
+            <th>選擇主題</th>
+            <th>遊戲模式</th>
+            <th>結果</th>
+            <th>最終分數</th>
+            <th>詳細數據</th>
+          </tr>
+        </thead>
+        <tbody id="historyTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==================== 1. 教育部台語辭典三大主題題庫（支援多音詞斜線 "/" 分隔） ====================
+const DICTIONARY = [
+  // 【主題一：天文地理】
+  { topic: "天文地理", hanzi: "日頭", pinyin: "ji̍t-thâu/li̍t-thâu", desc: "太陽。" },
+  { topic: "天文地理", hanzi: "月娘", pinyin: "gue̍h-niû/ge̍h-niû", desc: "月亮。" },
+  { topic: "天文地理", hanzi: "牛郎", pinyin: "Gû-nn̂g", desc: "傳統民間故事中牧牛的人。" },
+  { topic: "天文地理", hanzi: "落屎星", pinyin: "làu-sái-tshenn/làu-sái-tshinn", desc: "流星、賊星。" },
+  { topic: "天文地理", hanzi: "掃帚星", pinyin: "sàu-tshiú-tshenn/sàu-tshiú-tshinn", desc: "彗星。" },
+  { topic: "天文地理", hanzi: "星宿", pinyin: "sing-siù", desc: "天空的星群。" },
+  { topic: "天文地理", hanzi: "蝕日", pinyin: "sit-ji̍t/sit-li̍t", desc: "日蝕、日食。" },
+  { topic: "天文地理", hanzi: "霆雷公", pinyin: "tân-luî-kong", desc: "打雷。" },
+  { topic: "天文地理", hanzi: "召鏡", pinyin: "tiàu-kiànn", desc: "望遠鏡。" },
+  { topic: "天文地理", hanzi: "外埠頭", pinyin: "guā-poo-thâu", desc: "外地、外鄉鎮。" },
+  { topic: "天文地理", hanzi: "海峽", pinyin: "hái-kiap", desc: "兩塊陸地之間連接兩片海域的狹窄水道。" },
+  { topic: "天文地理", hanzi: "海墘", pinyin: "hái-kînn", desc: "海邊、海濱、海岸。" },
+  { topic: "天文地理", hanzi: "海沙埔", pinyin: "hái-sua-poo", desc: "海灘。泛稱海邊的沙地。" },
+  { topic: "天文地理", hanzi: "角勢", pinyin: "kak-sì", desc: "地方、一帶。" },
+  { topic: "天文地理", hanzi: "崁跤", pinyin: "khàm-kha", desc: "懸崖下。 地名。" },
+  { topic: "天文地理", hanzi: "溪仔墘", pinyin: "khe-á-kînn/khue-á-kînn", desc: "河岸、溪畔。" },
+  { topic: "天文地理", hanzi: "坑崁", pinyin: "khenn-khàm/khinn-khàm", desc: "山崖、山谷。" },
+  { topic: "天文地理", hanzi: "湳塗", pinyin: "làm-thôo", desc: "爛泥、泥濘的土。" },
+  { topic: "天文地理", hanzi: "漉糊糜", pinyin: "lo̍k-kôo-muê/lo̍k-kôo-bê", desc: "爛泥。稀爛的軟泥。" },
+  { topic: "天文地理", hanzi: "崙仔", pinyin: "lūn-á", desc: "小山丘、小土坡。" },
+  { topic: "天文地理", hanzi: "北極", pinyin: "pak-ki̍k", desc: "地軸的北端。" },
+  { topic: "天文地理", hanzi: "浮崙", pinyin: "phû-lūn", desc: "沙洲。" },
+  { topic: "天文地理", hanzi: "沙漠", pinyin: "sua-bo̍k", desc: "地面覆蓋沙土，乾旱缺水，植物稀少的土地。" },
+  { topic: "天文地理", hanzi: "沙崙", pinyin: "sua-lūn", desc: "沙丘。" },
+  { topic: "天文地理", hanzi: "澹水地", pinyin: "tâm-tsuí-tē/tâm-tsuí-tuē", desc: "沼澤地。" },
+  { topic: "天文地理", hanzi: "上崎", pinyin: "tsiūnn-kiā", desc: "上坡。" },
+  { topic: "天文地理", hanzi: "海拔", pinyin: "hái-pua̍t", desc: "某地高出「平均海平面」的垂直距離，又稱為「絕對高度」。" },
+  { topic: "天文地理", hanzi: "島嶼", pinyin: "tó-sū/tóo-sū", desc: "在海洋、江河或湖泊中，四周被水圍繞、面積小於大陸的陸地。" },
+  { topic: "天文地理", hanzi: "翕熱", pinyin: "hip-jua̍h/hip-lua̍h", desc: "悶熱。" },
+  { topic: "天文地理", hanzi: "漚鬱熱", pinyin: "àu-ut-jua̍h/àu-ut-lua̍h", desc: "悶熱。天氣熱，空氣不流通。" },
+  { topic: "天文地理", hanzi: "雨霎仔", pinyin: "hōo-sap-á", desc: "細雨。小雨。" },
+  { topic: "天文地理", hanzi: "燒烘烘", pinyin: "sio-hōng-hōng", desc: "溫度很高、很悶熱。" },
+  { topic: "天文地理", hanzi: "燒烙", pinyin: "sio-lō", desc: "溫暖、暖和。" },
+  { topic: "天文地理", hanzi: "赤焱焱", pinyin: "tshiah-iānn-iānn", desc: "炎熱。常用於形容陽光酷烈。" },
+  { topic: "天文地理", hanzi: "貓霧仔光", pinyin: "bâ-bū-á-kng", desc: "破曉時的天色。" },
+  { topic: "天文地理", hanzi: "雺霧", pinyin: "bông-bū", desc: "霧。" },
+  { topic: "天文地理", hanzi: "海墘", pinyin: "hái-kînn", desc: "海邊、海濱、海岸。" },
+  { topic: "天文地理", hanzi: "海漲", pinyin: "hái-tiòng", desc: "海嘯。 漲潮。" },
+  { topic: "天文地理", hanzi: "起蛟龍", pinyin: "khí-kau-lîng", desc: "海嘯。" },
+  { topic: "天文地理", hanzi: "洘旱", pinyin: "khó-huānn", desc: "大旱、旱災。" },
+  { topic: "天文地理", hanzi: "洘流", pinyin: "khó-lâu", desc: "退潮。" },
+  { topic: "天文地理", hanzi: "捲螺仔風", pinyin: "kńg-lê-á-hong", desc: "旋風、龍捲風。" },
+  { topic: "天文地理", hanzi: "生鉎", pinyin: "senn-sian/sinn-sian", desc: "生鏽。" },
+  { topic: "天文地理", hanzi: "爍爁", pinyin: "sih-nah", desc: "閃電。" },
+  { topic: "天文地理", hanzi: "霆雷公", pinyin: "tân-luî-kong", desc: "打雷。" },
+  { topic: "天文地理", hanzi: "樹蔭", pinyin: "tshiū-ńg", desc: "樹下日光照不到的地方。" },
+  { topic: "天文地理", hanzi: "搢風", pinyin: "tsìnn-hong", desc: "逆風。" },
+  { topic: "天文地理", hanzi: "番仔油", pinyin: "huan-á-iû", desc: "煤油。" },
+  { topic: "天文地理", hanzi: "金剛石", pinyin: "kim-kong-tsio̍h", desc: "鑽石。" },
+  { topic: "天文地理", hanzi: "硫磺", pinyin: "liû-hông", desc: "非金屬元素，呈黃色固體。性烈易燃，為製造火柴、火藥的原料，亦可用來製作許多工業原料和藥品等。" },
+  { topic: "天文地理", hanzi: "硓𥑮石", pinyin: "lóo-kóo-tsio̍h", desc: "一種珊瑚礁化石，被當作石灰岩建材使用。" },
+  { topic: "天文地理", hanzi: "打馬膠", pinyin: "tá-má-ka", desc: "柏油。" },
+
+  // 【主題二：生活】
+  { topic: "生活", hanzi: "安穩", pinyin: "an-ún", desc: "平安穩定。" },
+  { topic: "生活", hanzi: "肉粽節", pinyin: "Bah-tsàng-tseh/Bah-tsàng-tsueh", desc: "端午節。" },
+  { topic: "生活", hanzi: "無依無倚", pinyin: "bô-i-bô-uá", desc: "處境孤獨無助。" },
+  { topic: "生活", hanzi: "無閒𩑾𩑾", pinyin: "bô-îng-tshih-tshih", desc: "忙得不可開交、忙碌不堪、非常忙碌。" },
+  { topic: "生活", hanzi: "無暝無日", pinyin: "bô-mê-bô-ji̍t/bô-mî-bô-li̍t", desc: "沒日沒夜、夜以繼日。" },
+  { topic: "生活", hanzi: "尾牙", pinyin: "bué-gê/bé-gê", desc: "農曆十二月十六日為一年當中最後一次做牙" },
+  { topic: "生活", hanzi: "會得過", pinyin: "ē-tit-kuè/ē-tit-kè", desc: "空間足以通過。" },
+  { topic: "生活", hanzi: "五月節", pinyin: "Gōo-gue̍h-tseh/Gōo-ge̍h-tsueh", desc: "端午節。" },
+  { topic: "生活", hanzi: "元宵", pinyin: "Guân-siau", desc: "上元節。" },
+  { topic: "生活", hanzi: "好額人", pinyin: "hó-gia̍h-lâng", desc: "有錢人。" },
+  { topic: "生活", hanzi: "風調雨順", pinyin: "hong-tiâu-ú-sūn", desc: "風雨及時而適量。比喻豐年安樂的景象。" },
+  { topic: "生活", hanzi: "富貴", pinyin: "hù-kuì", desc: "有錢又有地位。" },
+  { topic: "生活", hanzi: "乞食命", pinyin: "khit-tsia̍h-miā", desc: "指生來就得靠要錢、要飯過日子的命運。" },
+  { topic: "生活", hanzi: "快活", pinyin: "khuìnn-ua̍h", desc: "愉快、舒服。 形容生活寬裕的。" },
+  { topic: "生活", hanzi: "困苦", pinyin: "khùn-khóo", desc: "貧困艱苦。" },
+  { topic: "生活", hanzi: "困難", pinyin: "khùn-lân", desc: "艱難。" },
+  { topic: "生活", hanzi: "健康", pinyin: "kiān-khong", desc: "形容人的生理及心理機能正常而強壯，沒有缺陷和疾病。" },
+  { topic: "生活", hanzi: "吉兆", pinyin: "kiat-tiāu", desc: "好預兆、吉祥的徵兆。" },
+  { topic: "生活", hanzi: "光明", pinyin: "kong-bîng", desc: "比喻希望。" },
+  { topic: "生活", hanzi: "孤單", pinyin: "koo-tuann", desc: "孤身一人而且沒有依靠。" },
+  { topic: "生活", hanzi: "顧三頓", pinyin: "kòo-sann-tǹg", desc: "引申為求溫飽。" },
+  { topic: "生活", hanzi: "過年", pinyin: "kuè-nî/kè-nî", desc: "指從舊的一年到新的一年。" },
+  { topic: "生活", hanzi: "犁田", pinyin: "lê-tshân/luê-tshân", desc: "耕田。摔車、撇輪。" },
+  { topic: "生活", hanzi: "蹽落去", pinyin: "liâu--lo̍h-khì", desc: "走進去、參與事情或涉入其中。" },
+  { topic: "生活", hanzi: "流浪", pinyin: "liû-lōng", desc: "生活沒有著落，到處飄盪，隨處謀生。" },
+  { topic: "生活", hanzi: "賴賴趖", pinyin: "luā-luā-sô", desc: "常用以比喻人無所事事地到處閒晃。" },
+  { topic: "生活", hanzi: "年冬", pinyin: "nî-tang", desc: "年分、年歲。 收成、收穫。" },
+  { topic: "生活", hanzi: "烏暗", pinyin: "oo-àm", desc: "黑暗、不明亮。" },
+  { topic: "生活", hanzi: "唔唔睏", pinyin: "onn-onn-khùn", desc: "睡覺的通俗說法，常用在哄小孩子睡覺的時候。" },
+  { topic: "生活", hanzi: "拋拋走", pinyin: "pha-pha-tsáu", desc: "四處亂跑。" },
+  { topic: "生活", hanzi: "拍損", pinyin: "phah-sńg", desc: "浪費、蹧蹋。" },
+  { topic: "生活", hanzi: "拍觸衰", pinyin: "phah-tshik-sue", desc: "觸霉頭。遇到倒霉、不愉快、不順暢的事。" },
+  { topic: "生活", hanzi: "歹年冬", pinyin: "pháinn-nî-tang", desc: "荒年、歉歲。農作物收成不好的年頭。" },
+  { topic: "生活", hanzi: "歹運", pinyin: "pháinn-ūn", desc: "背運、倒楣。運氣不好。" },
+  { topic: "生活", hanzi: "拚暝工", pinyin: "piànn-mê-kang/piànn-mî-kang", desc: "開夜車、熬夜。為了趕時間，利用夜晚休息時間繼續工作或學習。" },
+  { topic: "生活", hanzi: "散食人", pinyin: "sàn-tsia̍h-lâng", desc: "窮人。" },
+  { topic: "生活", hanzi: "四界趖", pinyin: "sì-kè-sô/sì-kuè-sô", desc: "遊蕩。不務正業，到處閒遊。" },
+  { topic: "生活", hanzi: "討債", pinyin: "thó-tsè", desc: "浪費、蹧蹋。沒有節制、無益的耗費。" },
+  { topic: "生活", hanzi: "拖磨", pinyin: "thua-buâ", desc: "辛苦操勞。" },
+  { topic: "生活", hanzi: "中元", pinyin: "Tiong-guân", desc: "我國傳統民俗節日之一。農曆七月十五日。" },
+  { topic: "生活", hanzi: "中秋節", pinyin: "Tiong-tshiu-tseh/Tiong-tshiu-tsueh", desc: "我國傳統民俗節日之一。農曆八月十五日。" },
+  { topic: "生活", hanzi: "重陽節", pinyin: "Tiông-iông-tseh/Tiông-iông-tsueh", desc: "我國傳統民俗節日之一。農曆九月九日。" },
+  { topic: "生活", hanzi: "走袂開跤", pinyin: "tsáu-bē-khui-kha/tsáu-buē-khui-kha", desc: "分不開身。" },
+  { topic: "生活", hanzi: "悽慘落魄", pinyin: "tshi-tshám-lo̍k-phik", desc: "慘不忍睹、慘兮兮。形容非常的悽慘。" },
+  { topic: "生活", hanzi: "請人客", pinyin: "tshiánn-lâng-kheh", desc: "請客、宴客。" },
+  { topic: "生活", hanzi: "手頭", pinyin: "tshiú-thâu", desc: "指個人一時的經濟狀況。" },
+  { topic: "生活", hanzi: "伸長手", pinyin: "tshun-tn̂g-tshiú", desc: "伸手向親友要錢。" },
+  { topic: "生活", hanzi: "伸勻", pinyin: "tshun-ûn", desc: "伸懶腰。舒展疲倦困乏的腰身。" },
+  { topic: "生活", hanzi: "大富大貴", pinyin: "tuā-hù-tuā-kuì", desc: "非常富有且地位顯貴。" },
+  { topic: "生活", hanzi: "胡蠅拍仔", pinyin: "hôo-sîn-phah-á", desc: "打蒼蠅的用具。" },
+  { topic: "生活", hanzi: "鉛筆絞仔", pinyin: "iân-pit-ká-á", desc: "削鉛筆機。" },
+  { topic: "生活", hanzi: "膨椅", pinyin: "phòng-í", desc: "沙發、沙發椅。" },
+  { topic: "生活", hanzi: "電火球仔", pinyin: "tiān-hué-kiû-á/tiān-hé-kiû-á", desc: "電燈泡、燈泡。" },
+  { topic: "生活", hanzi: "手指", pinyin: "tshiú-tsí", desc: "戒指。" },
+
+  // 【主題三：動物】
+  { topic: "動物", hanzi: "馬", pinyin: "bé", desc: "常見家畜的一種。十二生肖排序第七的生肖。" },
+  { topic: "動物", hanzi: "牛", pinyin: "gû", desc: "哺乳動物。十二生肖排序第二的生肖。" },
+  { topic: "動物", hanzi: "牛奶", pinyin: "gû-ling/gû-ni", desc: "牛的乳汁。" },
+  { topic: "動物", hanzi: "熊", pinyin: "hîm", desc: "哺乳動物。" },
+  { topic: "動物", hanzi: "羊", pinyin: "iûnn", desc: "哺乳動物。十二生肖排序第八的生肖。" },
+  { topic: "動物", hanzi: "狗", pinyin: "káu", desc: "嗅覺和聽覺很靈敏，且性情忠誠，被喻為人類的朋友。十二生肖排序第十一的生肖。" },
+  { topic: "動物", hanzi: "猴", pinyin: "kâu", desc: "外形與人類相似，行動矯捷靈活，喜群居生活。十二生肖排序第九的生肖。" },
+  { topic: "動物", hanzi: "麒麟鹿", pinyin: "kî-lîn-lo̍k", desc: "長頸鹿。" },
+  { topic: "動物", hanzi: "鹿", pinyin: "lo̍k", desc: "哺乳動物。" },
+  { topic: "動物", hanzi: "狼", pinyin: "lông", desc: "形狀似犬，頭銳喙尖，後腳稍短。嗅覺靈敏，聽覺佳。" },
+  { topic: "動物", hanzi: "貓仔", pinyin: "niau-á", desc: "常見家畜的一種。聽覺和視覺都很敏銳，行動敏捷，善捕鼠。" },
+  { topic: "動物", hanzi: "鳥鼠", pinyin: "niáu-tshí/niáu-tshú", desc: "老鼠。" },
+  { topic: "動物", hanzi: "膨鼠", pinyin: "phòng-tshí/phòng-tshú", desc: "松鼠。" },
+  { topic: "動物", hanzi: "獅", pinyin: "sai", desc: "哺乳動物。分布在印度及非洲一帶。" },
+  { topic: "動物", hanzi: "兔", pinyin: "thòo", desc: "十二生肖排序第四的生肖。" },
+  { topic: "動物", hanzi: "豬", pinyin: "ti/tu", desc: "常見家畜的一種。多養來食用。十二生肖排序第十二的生肖。" },
+  { topic: "動物", hanzi: "象", pinyin: "tshiūnn", desc: "哺乳動物。體型龐大，草食性，有大耳長鼻，性溫和，常被當作搬運的畜力。" },
+  { topic: "動物", hanzi: "水牛", pinyin: "tsuí-gû", desc: "哺乳動物。體型大，毛色灰黑，擅長耕田。" },
+  { topic: "動物", hanzi: "鴨", pinyin: "ah", desc: "常見家禽的一種。嘴扁平，腳短，趾間有蹼，擅長游水，飛行能力差，蛋、肉皆可食。" },
+  { topic: "動物", hanzi: "火雞", pinyin: "hué-ke/hé-kue", desc: "禽鳥類。體高三尺餘，頭部有紅色肉瘤，雄者喉部有下垂的紅色肉瓣。" },
+  { topic: "動物", hanzi: "雞", pinyin: "ke/kue", desc: "常見家禽的一種。十二生肖排序第十的生肖。" },
+  { topic: "動物", hanzi: "雞卵", pinyin: "ke-nn̄g/kue-nn̄g", desc: "雞蛋。" },
+  { topic: "動物", hanzi: "白翎鷥", pinyin: "pe̍h-līng-si", desc: "白鷺鷥。" },
+  { topic: "動物", hanzi: "厝角鳥仔", pinyin: "tshù-kak-tsiáu-á", desc: "麻雀。" },
+  { topic: "動物", hanzi: "田蛤仔", pinyin: "tshân-kap-á", desc: "田蛙、青蛙。" },
+  { topic: "動物", hanzi: "水雞", pinyin: "tsuí-ke/tsuí-kue", desc: "青蛙。" },
+  { topic: "動物", hanzi: "𧌄蜅蠐", pinyin: "am-poo-tsê", desc: "蟬。" },
+  { topic: "動物", hanzi: "蜈蚣", pinyin: "giâ-kang", desc: "節肢動物。" },
+  { topic: "動物", hanzi: "火金蛄", pinyin: "hué-kim-koo/hé-kim-koo", desc: "螢火蟲。" },
+  { topic: "動物", hanzi: "虼蚻", pinyin: "ka-tsua̍h", desc: "蟑螂。" },
+  { topic: "動物", hanzi: "狗蟻", pinyin: "káu-hiā", desc: "螞蟻。" },
+  { topic: "動物", hanzi: "蟬", pinyin: "siân", desc: "昆蟲名。" },
+  { topic: "動物", hanzi: "杜猴", pinyin: "tōo-kâu", desc: "蟋蟀。" },
+  { topic: "動物", hanzi: "田嬰", pinyin: "tshân-enn/tshân-inn", desc: "蜻蜓。" },
+  { topic: "動物", hanzi: "海豬", pinyin: "hái-ti/hái-tu", desc: "海豚。" },
+  { topic: "動物", hanzi: "蝦仔", pinyin: "hê-á", desc: "節肢動物。" },
+  { topic: "動物", hanzi: "鼢鼠", pinyin: "bùn-tshí/bùn-tshú", desc: "鼴鼠。" },
+  { topic: "動物", hanzi: "羌仔", pinyin: "kiunn-á", desc: "哺乳動物。全身披褐色短毛，常出沒在清晨和傍晚的山地密林裡。" },
+  { topic: "動物", hanzi: "駱駝", pinyin: "lo̍k-tô", desc: "哺乳動物。身形高大，背有駝峰，分為單峰與雙峰。" },
+  { topic: "動物", hanzi: "頭牲仔", pinyin: "thâu-senn-á/thâu-sinn-á", desc: "牲口。家中豢養的家禽、家畜。" },
+  { topic: "動物", hanzi: "長頷鹿", pinyin: "tn̂g-ām-lo̍k", desc: "長頸鹿。" },
+  { topic: "動物", hanzi: "水獺", pinyin: "tsuí-thuah", desc: "哺乳動物。體形似鼬，身體柔軟細長，尾長足短，趾間有蹼。" },
+  { topic: "動物", hanzi: "鴟鴞", pinyin: "bā-hio̍h", desc: "老鷹。" },
+  { topic: "動物", hanzi: "鵁鴒", pinyin: "ka-līng", desc: "八哥。" },
+  { topic: "動物", hanzi: "雞鵤", pinyin: "ke-kak/kue-kak", desc: "未成熟的公雞。常見家禽的一種，雄性未成熟的雞。" },
+  { topic: "動物", hanzi: "徛鵝", pinyin: "khiā-gô", desc: "企鵝。" },
+  { topic: "動物", hanzi: "鸕鶿", pinyin: "lôo-tsî", desc: "魚鷹。" },
+  { topic: "動物", hanzi: "烏面抐桮", pinyin: "oo-bīn-lā-pue", desc: "黑面琵鷺。" },
+  { topic: "動物", hanzi: "徛鵝", pinyin: "khiā-gô", desc: "企鵝。" },
+  { topic: "動物", hanzi: "肚胿仔", pinyin: "tōo-kuai-á", desc: "蝌蚪。" },
+  { topic: "動物", hanzi: "螿蜍", pinyin: "tsiunn-tsî", desc: "蟾蜍、癩蝦蟆。" },
+  { topic: "動物", hanzi: "牛犅𨂿", pinyin: "gû-káng-uainnh", desc: "天牛。" },
+  { topic: "動物", hanzi: "蟲豸", pinyin: "thâng-thuā", desc: "昆蟲的通稱。" },
+  { topic: "動物", hanzi: "草蜢仔", pinyin: "tsháu-meh-á", desc: "蚱蜢、蝗蟲。" },
+  { topic: "動物", hanzi: "白頭鵠仔", pinyin: "pe̍h-thâu-khok-á", desc: "白頭翁。" },
+  { topic: "動物", hanzi: "墨賊仔", pinyin: "ba̍k-tsa̍t-á", desc: "烏賊。" },
+  { topic: "動物", hanzi: "塗虱", pinyin: "thôo-sat", desc: "小鯰魚。" },
+  { topic: "動物", hanzi: "鮢鱖", pinyin: "tsu-kuè/tsu-kè", desc: "鞍帶石斑魚。" },
+  { topic: "動物", hanzi: "蟧蜈", pinyin: "lâ-giâ", desc: "長腳蜘蛛。" },
+];
+
+// ==================== 2. 裝置相容性檢測（手機無法遊玩模式三） ====================
+function isMobileDevice() {
+  return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+function updateDeviceCompatibility() {
+  const mobile = isMobileDevice();
+  const coopCard = document.getElementById('coopModeCard');
+  const coopBtn = document.getElementById('coopStartLobbyBtn');
+  if (mobile) {
+    coopCard.classList.add('disabled-card');
+    coopBtn.disabled = true;
+    coopBtn.textContent = '💻 僅限電腦鍵盤遊玩';
+  } else {
+    coopCard.classList.remove('disabled-card');
+    coopBtn.disabled = false;
+    coopBtn.textContent = '前往合作戰場 (10題通關)';
+  }
+}
+
+window.addEventListener('resize', updateDeviceCompatibility);
+updateDeviceCompatibility();
+
+// ==================== 3. 全局設定：配色與主題選擇 ====================
+let selectedTopic = "天文地理";
+
+function changeTheme(themeName) {
+  document.body.setAttribute('data-theme', themeName);
+  localStorage.setItem('taigi_game_theme', themeName);
+}
+
+(function initTheme() {
+  const savedTheme = localStorage.getItem('taigi_game_theme') || 'warm';
+  document.body.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeSelect').value = savedTheme;
+})();
+
+function selectTopic(topic) {
+  selectedTopic = topic;
+  document.querySelectorAll('.topic-pill').forEach(el => {
+    el.classList.toggle('selected', el.dataset.topic === topic);
+  });
+  document.getElementById('currentTopicBadge').textContent = topic;
+}
+
+function getFilteredDictionary() {
+  if (selectedTopic === "全部混合") return DICTIONARY;
+  return DICTIONARY.filter(item => item.topic === selectedTopic);
+}
+
+class QuestionDeck {
+  constructor() {
+    this.pool = getFilteredDictionary();
+    this.deck = [];
+  }
+  next() {
+    if (this.deck.length === 0) {
+      this.deck = [...this.pool].sort(() => Math.random() - 0.5);
+    }
+    return this.deck.pop();
+  }
+}
+
+// ==================== 臺羅拼音轉數字調號引擎（支援標準調號與數字調號互通） ====================
+function syllableToNumericTone(syl) {
+  const s = syl.trim().toLowerCase();
+  if (!s) return "";
+  // 若音節結尾已包含數字調號（1~9），直接保留正規化格式
+  if (/[1-9]$/.test(s)) {
+    return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  const nfd = s.normalize("NFD");
+  let tone = "";
+  if (nfd.includes("\u0301")) tone = "2";       // 上聲 (ˊ)
+  else if (nfd.includes("\u0300")) tone = "3";  // 去聲 (`)
+  else if (nfd.includes("\u0302")) tone = "5";  // 陽平 (ˆ)
+  else if (nfd.includes("\u0304")) tone = "7";  // 陽去 (¯)
+  else if (nfd.includes("\u030d")) tone = "8";  // 陽入 (̍)
+
+  const base = nfd.replace(/[\u0300-\u036f]/g, "");
+  if (!tone) {
+    // 無調號符號時，依入聲尾 (-p, -t, -k, -h) 判斷為 4 調，其餘為 1 調
+    tone = /[ptkh]$/.test(base) ? "4" : "1";
+  }
+  return base + tone;
+}
+
+function toNumericPinyin(str) {
+  return str.trim().toLowerCase()
+    .replace(/--/g, "-")
+    .split(/[\s-]+/)
+    .filter(Boolean)
+    .map(syllableToNumericTone)
+    .join("-");
+}
+
+// 支援標準臺羅拼音或數字代替調號，多音詞任一讀音皆可過關
+function checkAnswer(userInput, targetObj, type) {
+  const clean = userInput.trim();
+  if (!clean) return false;
+
+  if (type === "hanzi") {
+    const validHanziList = targetObj.hanzi.split('/').map(h => h.trim());
+    return validHanziList.includes(clean);
+  } else {
+    const validPinyinList = targetObj.pinyin.split('/').map(p => p.trim());
+    const userNumeric = toNumericPinyin(clean);
+
+    return validPinyinList.some(validP => {
+      if (clean.toLowerCase() === validP.toLowerCase()) return true;
+      const validNumeric = toNumericPinyin(validP);
+      if (userNumeric === validNumeric) return true;
+      // 容錯處理：若字典或玩家將入聲標為 4 調或 8 調（如 jit4-thau5 vs jit8-thau5），基音與聲調結構相符亦予通過
+      const relaxUser = userNumeric.replace(/([ptkh])8\b/g, "$14");
+      const relaxValid = validNumeric.replace(/([ptkh])8\b/g, "$14");
+      return relaxUser === relaxValid;
+    });
+  }
+}
+
+let activeIntervals = [];
+let activeAnimFrame = null;
+
+function clearAllLoops() {
+  activeIntervals.forEach(id => clearInterval(id));
+  activeIntervals = [];
+  if (activeAnimFrame) cancelAnimationFrame(activeAnimFrame);
+  activeAnimFrame = null;
+}
+
+function showScreen(id) {
+  clearAllLoops();
+  document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ==================== 4. 歷程紀錄系統 ====================
+function saveRecord(topicName, modeName, isWin, score, detailText) {
+  const records = JSON.parse(localStorage.getItem('taigi_game_records_v3') || '[]');
+  records.unshift({
+    time: new Date().toLocaleString('zh-TW', { hour12: false }),
+    topic: topicName,
+    mode: modeName,
+    win: isWin,
+    score: Math.round(score),
+    detail: detailText
+  });
+  localStorage.setItem('taigi_game_records_v3', JSON.stringify(records.slice(0, 50)));
+}
+
+function openHistory() {
+  showScreen('historyScreen');
+  const records = JSON.parse(localStorage.getItem('taigi_game_records_v3') || '[]');
+  const tbody = document.getElementById('historyTableBody');
+  if (records.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">目前尚無遊玩紀錄，快選擇主題開始挑戰吧！</td></tr>';
+    return;
+  }
+  tbody.innerHTML = records.map(r => `
+    <tr>
+      <td>${r.time}</td>
+      <td><span class="q-tag" style="margin:0;">${r.topic}</span></td>
+      <td>${r.mode}</td>
+      <td><span class="${r.win ? 'badge-win' : 'badge-lose'}">${r.win ? '勝利/通關' : '失敗/落敗'}</span></td>
+      <td><strong>${r.score}</strong> 分</td>
+      <td>${r.detail}</td>
+    </tr>
+  `).join('');
+}
+
+function clearHistory() {
+  if (confirm("確定要清除所有歷史遊玩紀錄嗎？")) {
+    localStorage.removeItem('taigi_game_records_v3');
+    openHistory();
+  }
+}
+
+function showResult(topicName, modeName, isWin, score, subtitle, detailHtml, recordDetail) {
+  saveRecord(topicName, modeName, isWin, score, recordDetail);
+  showScreen('resultScreen');
+  document.getElementById('resTitle').textContent = isWin ? "🎉 恭喜通關獲勝！" : "💀 挑戰結束！";
+  document.getElementById('resTitle').style.color = isWin ? "var(--success)" : "var(--danger)";
+  document.getElementById('resSubtitle').textContent = subtitle;
+  document.getElementById('resDetails').innerHTML = detailHtml;
+}
+
+// ==================== 5. 模式一：單人 RPG 通關（答對10題通關） ====================
+let rpgState = {};
+
+function startRPG() {
+  const bossType = document.getElementById('rpgBossSelect').value;
+  showScreen('rpgScreen');
+  rpgState = {
+    topic: selectedTopic,
+    bossType,
+    playerHp: 100,
+    bossHp: 100,
+    deck: new QuestionDeck(),
+    currentQ: null,
+    correctCount: 0,
+    wrongCount: 0
+  };
+  document.getElementById('rpgBossName').textContent = bossType === 'hanzi' ? '👹 漢字魔王' : '🧙‍♂️ 拼音魔王';
+  document.getElementById('rpgInput').placeholder = bossType === 'hanzi'
+    ? '請輸入【台語漢字】...'
+    : '請輸入【臺羅拼音】（如 Gû-nn̂g 或 Gu5-nng5）...';
+  document.getElementById('rpgFeedback').textContent = '';
+  updateRpgUI();
+  nextRpgQuestion();
+  document.getElementById('rpgInput').focus();
+}
+
+function updateRpgUI() {
+  const remain = Math.max(0, 10 - rpgState.correctCount);
+  document.getElementById('rpgPlayerHpText').textContent = `${rpgState.playerHp} / 100`;
+  document.getElementById('rpgPlayerHpBar').style.width = `${rpgState.playerHp}%`;
+  document.getElementById('rpgBossHpText').textContent = `${rpgState.bossHp} / 100 (還需${remain}題)`;
+  document.getElementById('rpgBossHpBar').style.width = `${rpgState.bossHp}%`;
+}
+
+function nextRpgQuestion() {
+  rpgState.currentQ = rpgState.deck.next();
+  const q = rpgState.currentQ;
+  document.getElementById('rpgCategory').textContent = `主題：${q.topic}（進度：${rpgState.correctCount} / 10 題）`;
+  document.getElementById('rpgPrompt').textContent = rpgState.bossType === 'hanzi' ? q.pinyin : q.hanzi;
+  document.getElementById('rpgMeaning').textContent = `釋義：${q.desc}`;
+  document.getElementById('rpgInput').value = '';
+}
+
+function submitRpgAnswer() {
+  const inputEl = document.getElementById('rpgInput');
+  const val = inputEl.value;
+  if (!val.trim()) return;
+
+  const q = rpgState.currentQ;
+  const isRight = checkAnswer(val, q, rpgState.bossType);
+  const fb = document.getElementById('rpgFeedback');
+
+  if (isRight) {
+    rpgState.bossHp = Math.max(0, rpgState.bossHp - 10);
+    rpgState.correctCount++;
+    fb.style.color = 'var(--success)';
+    fb.textContent = `⚔️ 命中！答案正確（${q.hanzi} / ${q.pinyin}），魔王扣 10 血！（${rpgState.correctCount}/10）`;
+  } else {
+    rpgState.playerHp = Math.max(0, rpgState.playerHp - 20);
+    rpgState.wrongCount++;
+    const ans = rpgState.bossType === 'hanzi' ? q.hanzi : q.pinyin;
+    fb.style.color = 'var(--danger)';
+    fb.textContent = `💥 受到反擊！正確答案是【${ans}】，你扣了 20 血！`;
+  }
+  updateRpgUI();
+
+  if (rpgState.bossHp <= 0 || rpgState.playerHp <= 0) {
+    const win = rpgState.bossHp <= 0;
+    const total = rpgState.correctCount + rpgState.wrongCount;
+    const acc = total ? Math.round((rpgState.correctCount / total) * 100) : 0;
+    const score = rpgState.correctCount * 150 + rpgState.playerHp * 5;
+    const bossLabel = rpgState.bossType === 'hanzi' ? '漢字魔王' : '拼音魔王';
+    setTimeout(() => {
+      showResult(
+        rpgState.topic,
+        `單人RPG (${bossLabel})`,
+        win,
+        score,
+        win ? `你成功答對 10 題，擊敗了【${rpgState.topic}】${bossLabel}！` : `你被${bossLabel}擊倒了，再接再厲！`,
+        `挑戰主題：<strong>${rpgState.topic}</strong><br>總得分：<strong>${score}</strong> 分<br>答對題數：${rpgState.correctCount} / 10 題 ｜ 答錯題數：${rpgState.wrongCount} 題<br>最終正確率：${acc}%`,
+        `對${rpgState.correctCount}題 / 錯${rpgState.wrongCount}題 (正確率${acc}%)`
+      );
+    }, 600);
+  } else {
+    nextRpgQuestion();
+    inputEl.focus();
+  }
+}
+
+document.getElementById('rpgInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') submitRpgAnswer();
+});
+
+// ==================== 6. 模式二：機器人限時對抗（3分鐘） ====================
+let vsState = {};
+
+function prepareVersus() {
+  const opp = document.getElementById('versusOpponent').value;
+  showScreen('versusScreen');
+  document.getElementById('vsTopicLabel').textContent = selectedTopic;
+  document.getElementById('vsTimer').textContent = '03:00';
+
+  vsState = {
+    started: false,
+    topic: selectedTopic,
+    opp,
+    timeLeft: 180,
+    p1: { deck: new QuestionDeck(), q: null, right: 0, total: 0 },
+    p2: { deck: new QuestionDeck(), q: null, right: 0, total: 0 }
+  };
+
+  const startBtn = document.getElementById('vsStartBtn');
+  startBtn.style.display = 'inline-block';
+
+  const p1Input = document.getElementById('vsP1Input');
+  const p1Btn = document.getElementById('vsP1SubmitBtn');
+  p1Input.value = '';
+  p1Input.disabled = true;
+  p1Btn.disabled = true;
+  p1Input.placeholder = "請先點擊上方「開始 3 分鐘對戰」...";
+
+  const names = { 'bot-easy': '🤖 機器人 (簡單)', 'bot-med': '🤖 機器人 (中等)', 'bot-hard': '🤖 機器人 (困難)' };
+  document.getElementById('vsP2Title').textContent = names[opp];
+  document.getElementById('vsP2Input').value = '';
+  document.getElementById('vsP2Input').placeholder = "等待對戰開始（機器人將自動作答）...";
+
+  ['vsP1', 'vsP2'].forEach(prefix => {
+    document.getElementById(`${prefix}Cat`).textContent = '準備就緒';
+    document.getElementById(`${prefix}Prompt`).textContent = '按下「開始 3 分鐘對戰」揭曉題目';
+    document.getElementById(`${prefix}Desc`).textContent = '支援標準調號（sit-ji̍t）或數字調號（sit4-jit8）';
+    document.getElementById(`${prefix}Feedback`).textContent = '';
+  });
+  updateVsUI();
+}
+
+function beginVersusBattle() {
+  if (vsState.started) return;
+  vsState.started = true;
+
+  document.getElementById('vsStartBtn').style.display = 'none';
+  const p1Input = document.getElementById('vsP1Input');
+  const p1Btn = document.getElementById('vsP1SubmitBtn');
+
+  p1Input.disabled = false;
+  p1Btn.disabled = false;
+  p1Input.placeholder = "輸入臺羅拼音（調號或數字調）...";
+  document.getElementById('vsP2Input').placeholder = "機器人自動作答中...";
+
+  startBotAI(vsState.opp);
+  nextVsQuestion('p1');
+  nextVsQuestion('p2');
+  p1Input.focus();
+
+  const timerId = setInterval(() => {
+    vsState.timeLeft--;
+    const m = String(Math.floor(vsState.timeLeft / 60)).padStart(2, '0');
+    const s = String(vsState.timeLeft % 60).padStart(2, '0');
+    document.getElementById('vsTimer').textContent = `${m}:${s}`;
+    if (vsState.timeLeft <= 0) {
+      finishVersus();
+    }
+  }, 1000);
+  activeIntervals.push(timerId);
+}
+
+function nextVsQuestion(who) {
+  const p = vsState[who];
+  p.q = p.deck.next();
+  const prefix = who === 'p1' ? 'vsP1' : 'vsP2';
+  document.getElementById(`${prefix}Cat`).textContent = p.q.topic;
+  document.getElementById(`${prefix}Prompt`).textContent = p.q.hanzi;
+  document.getElementById(`${prefix}Desc`).textContent = p.q.desc;
+  document.getElementById(`${prefix}Input`).value = '';
+}
+
+function calcVsScore(p) {
+  if (p.total === 0) return 0;
+  const acc = p.right / p.total;
+  return Math.round((acc * acc * 1000) + (p.right * 25));
+}
+
+function updateVsUI() {
+  ['p1', 'p2'].forEach(who => {
+    const p = vsState[who];
+    const prefix = who === 'p1' ? 'vsP1' : 'vsP2';
+    const acc = p.total === 0 ? 100 : Math.round((p.right / p.total) * 100);
+    document.getElementById(`${prefix}Score`).textContent = calcVsScore(p);
+    document.getElementById(`${prefix}Acc`).textContent = `${acc}%`;
+    document.getElementById(`${prefix}Stats`).textContent = `${p.right}/${p.total}`;
+  });
+}
+
+function handleVsSubmit(who, val) {
+  if (!vsState.started || !val.trim()) return;
+  const p = vsState[who];
+  const prefix = who === 'p1' ? 'vsP1' : 'vsP2';
+  const fb = document.getElementById(`${prefix}Feedback`);
+  p.total++;
+  if (checkAnswer(val, p.q, 'pinyin')) {
+    p.right++;
+    fb.style.color = 'var(--success)';
+    fb.textContent = `✅ 正確！(${p.q.pinyin})`;
+  } else {
+    fb.style.color = 'var(--danger)';
+    fb.textContent = `❌ 錯誤！正解：${p.q.pinyin}`;
+  }
+  updateVsUI();
+  nextVsQuestion(who);
+  if (who === 'p1') document.getElementById('vsP1Input').focus();
+}
+
+document.getElementById('vsP1Input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && vsState.started) handleVsSubmit('p1', e.target.value);
+});
+
+function startBotAI(level) {
+  const config = {
+    'bot-easy': { interval: 7500, acc: 0.65 },
+    'bot-med':  { interval: 4800, acc: 0.82 },
+    'bot-hard': { interval: 3000, acc: 0.95 }
+  }[level];
+
+  const botId = setInterval(() => {
+    if (!vsState.started) return;
+    const p = vsState.p2;
+    const isRight = Math.random() < config.acc;
+    const botAns = p.q.pinyin.split('/')[0].trim();
+    document.getElementById('vsP2Input').value = isRight ? botAns : "m7-tsai1";
+    setTimeout(() => {
+      if (vsState.timeLeft > 0 && vsState.started) handleVsSubmit('p2', isRight ? botAns : "m7-tsai1");
+    }, 400);
+  }, config.interval);
+  activeIntervals.push(botId);
+}
+
+function finishVersus() {
+  const s1 = calcVsScore(vsState.p1);
+  const s2 = calcVsScore(vsState.p2);
+  const acc1 = vsState.p1.total ? Math.round((vsState.p1.right / vsState.p1.total) * 100) : 0;
+  const acc2 = vsState.p2.total ? Math.round((vsState.p2.right / vsState.p2.total) * 100) : 0;
+  const win = s1 >= s2;
+  const botLabels = { 'bot-easy': '機器人-簡單', 'bot-med': '機器人-中等', 'bot-hard': '機器人-困難' };
+  const modeLabel = `人機對抗 (${botLabels[vsState.opp]})`;
+
+  showResult(
+    vsState.topic,
+    modeLabel,
+    win,
+    s1,
+    win ? "🏆 你擊敗了機器人，贏得拼音競速對決！" : "😢 機器人更勝一籌，下次再戰！",
+    `挑戰主題：<strong>${vsState.topic}</strong><br>
+     <strong>你的成績：</strong>${s1} 分（正確率 ${acc1}%，答對 ${vsState.p1.right}/${vsState.p1.total} 題）<br>
+     <strong>機器人成績：</strong>${s2} 分（正確率 ${acc2}%，答對 ${vsState.p2.right}/${vsState.p2.total} 題）<br>
+     <small style="color:var(--primary);">※ 計分規則：以拼音正確率平方為核心權重，結合答對題數計算</small>`,
+    `玩家: ${s1}分(${acc1}%) vs AI: ${s2}分(${acc2}%)`
+  );
+}
+
+// ==================== 7. 模式三：雙人合作打怪（支援多音方塊掉落與接取） ====================
+let coopState = {};
+const keysPressed = {};
+window.addEventListener('keydown', e => {
+  keysPressed[e.key.toLowerCase()] = true;
+  keysPressed[e.code] = true;
+});
+window.addEventListener('keyup', e => {
+  keysPressed[e.key.toLowerCase()] = false;
+  keysPressed[e.code] = false;
+});
+
+function renderCoopScene(ctx, canvas) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  [coopState.p1, coopState.p2].forEach(p => {
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.roundRect(p.x, p.y, p.w, p.h, 8);
+    ctx.fill();
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 13px "jf-openhuninn", "Microsoft JhengHei", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(p.label, p.x + p.w / 2, p.y + 20);
+  });
+
+  coopState.blocks.forEach(b => {
+    ctx.fillStyle = b.isHanzi ? '#fff1f2' : '#eff6ff';
+    ctx.strokeStyle = b.isHanzi ? '#e11d48' : '#0284c7';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.roundRect(b.x, b.y, b.w, b.h, 8);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#1e293b';
+    ctx.font = 'bold 16px "jf-openhuninn", "Microsoft JhengHei", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(b.text, b.x + b.w / 2, b.y + 24);
+  });
+}
+
+function prepareCoop() {
+  if (isMobileDevice()) {
+    alert("雙人合作打怪需要雙人同時使用電腦鍵盤（A/D 與 左右方向鍵），請使用電腦開啟網頁遊玩！");
+    return;
+  }
+  showScreen('coopScreen');
+  const canvas = document.getElementById('coopCanvas');
+  const ctx = canvas.getContext('2d');
+  const topicPool = getFilteredDictionary();
+
+  coopState = {
+    started: false,
+    topic: selectedTopic,
+    pool: topicPool,
+    deck: new QuestionDeck(),
+    target: null,
+    gotHanzi: false,
+    gotPinyin: false,
+    completedWords: 0,
+    hearts: 5,
+    bossHp: 100,
+    score: 0,
+    blocks: [],
+    p1: { x: 200, y: 392, w: 96, h: 30, color: '#16a34a', label: 'P1 (A / D)' },
+    p2: { x: 560, y: 392, w: 96, h: 30, color: '#d97706', label: 'P2 (← / →)' },
+    spawnTimer: 0
+  };
+
+  setNextCoopTarget();
+  updateCoopUI();
+  renderCoopScene(ctx, canvas);
+
+  document.getElementById('coopStartOverlay').style.display = 'flex';
+}
+
+function beginCoopGame() {
+  if (coopState.started) return;
+  coopState.started = true;
+  document.getElementById('coopStartOverlay').style.display = 'none';
+
+  const canvas = document.getElementById('coopCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function spawnBlock() {
+    const isTarget = Math.random() < 0.52;
+    const item = isTarget ? coopState.target : coopState.pool[Math.floor(Math.random() * coopState.pool.length)];
+    const isHanzi = Math.random() < 0.5;
+
+    const hanziOptions = item.hanzi.split('/').map(h => h.trim());
+    const pinyinOptions = item.pinyin.split('/').map(p => p.trim());
+    const text = isHanzi
+      ? hanziOptions[Math.floor(Math.random() * hanziOptions.length)]
+      : pinyinOptions[Math.floor(Math.random() * pinyinOptions.length)];
+
+    coopState.blocks.push({
+      x: 40 + Math.random() * (canvas.width - 180),
+      y: -34,
+      w: Math.max(96, text.length * 14 + 26),
+      h: 36,
+      text,
+      isHanzi,
+      speed: 1.7 + Math.random() * 1.1
+    });
+  }
+
+  spawnBlock();
+
+  function update() {
+    if (!coopState.started) return;
+
+    if (keysPressed['a'] || keysPressed['KeyA']) {
+      coopState.p1.x = Math.max(0, coopState.p1.x - 6.5);
+    }
+    if (keysPressed['d'] || keysPressed['KeyD']) {
+      coopState.p1.x = Math.min(canvas.width - coopState.p1.w, coopState.p1.x + 6.5);
+    }
+    if (keysPressed['ArrowLeft'] || keysPressed['arrowleft']) {
+      coopState.p2.x = Math.max(0, coopState.p2.x - 6.5);
+    }
+    if (keysPressed['ArrowRight'] || keysPressed['arrowright']) {
+      coopState.p2.x = Math.min(canvas.width - coopState.p2.w, coopState.p2.x + 6.5);
+    }
+
+    coopState.spawnTimer++;
+    if (coopState.spawnTimer % 60 === 0) spawnBlock();
+
+    for (let i = coopState.blocks.length - 1; i >= 0; i--) {
+      const b = coopState.blocks[i];
+      b.y += b.speed;
+
+      const hitP1 = rectIntersect(b, coopState.p1);
+      const hitP2 = rectIntersect(b, coopState.p2);
+
+      if (hitP1 || hitP2) {
+        coopState.blocks.splice(i, 1);
+        handleCoopCatch(b);
+        if (coopState.hearts <= 0 || coopState.completedWords >= 10) return;
+        continue;
+      }
+
+      if (b.y > canvas.height) {
+        coopState.blocks.splice(i, 1);
+      }
+    }
+
+    renderCoopScene(ctx, canvas);
+    activeAnimFrame = requestAnimationFrame(update);
+  }
+
+  activeAnimFrame = requestAnimationFrame(update);
+}
+
+function rectIntersect(r1, r2) {
+  return !(r2.x > r1.x + r1.w || r2.x + r2.w < r1.x || r2.y > r1.y + r1.h || r2.y + r2.h < r1.y);
+}
+
+function setNextCoopTarget() {
+  coopState.target = coopState.deck.next();
+  coopState.gotHanzi = false;
+  coopState.gotPinyin = false;
+  document.getElementById('coopTargetText').textContent = `${coopState.target.hanzi} ｜ ${coopState.target.pinyin}`;
+  document.getElementById('coopTargetDesc').textContent = `釋義：${coopState.target.desc}`;
+  updateCoopUI();
+}
+
+function handleCoopCatch(block) {
+  const t = coopState.target;
+  const validHanzis = t.hanzi.split('/').map(h => h.trim());
+  const validPinyins = t.pinyin.split('/').map(p => p.trim());
+
+  const isCorrectHanzi = block.isHanzi && validHanzis.includes(block.text);
+  const isCorrectPinyin = !block.isHanzi && validPinyins.includes(block.text);
+
+  if (isCorrectHanzi || isCorrectPinyin) {
+    if (isCorrectHanzi && !coopState.gotHanzi) {
+      coopState.gotHanzi = true;
+      coopState.score += 50;
+    }
+    if (isCorrectPinyin && !coopState.gotPinyin) {
+      coopState.gotPinyin = true;
+      coopState.score += 50;
+    }
+
+    if (coopState.gotHanzi && coopState.gotPinyin) {
+      coopState.completedWords++;
+      coopState.score += 150;
+      coopState.bossHp = Math.max(0, 100 - coopState.completedWords * 10);
+      if (coopState.completedWords < 10) {
+        setNextCoopTarget();
+      }
+    }
+  } else {
+    coopState.hearts = Math.max(0, coopState.hearts - 1);
+  }
+
+  updateCoopUI();
+
+  if (coopState.hearts <= 0 || coopState.completedWords >= 10) {
+    const win = coopState.completedWords >= 10;
+    clearAllLoops();
+    showResult(
+      coopState.topic,
+      '雙人合作打怪',
+      win,
+      coopState.score,
+      win ? `🎉 雙人默契十足，成功集滿 10 組詞彙擊敗【${coopState.topic}】辭典巨獸！` : "💔 愛心耗盡，巨獸逃跑了！",
+      `挑戰主題：<strong>${coopState.topic}</strong><br>合作總分：<strong>${coopState.score}</strong> 分<br>完成題數：${coopState.completedWords} / 10 題 ｜ 剩餘愛心：${coopState.hearts} 顆`,
+      `完成${coopState.completedWords}/10題 / 剩餘${coopState.hearts}顆愛心`
+    );
+  }
+}
+
+function updateCoopUI() {
+  document.getElementById('coopHearts').textContent = '❤️'.repeat(coopState.hearts) + '🤍'.repeat(5 - coopState.hearts);
+  document.getElementById('coopBossHpText').textContent = `${coopState.bossHp} / 100`;
+  document.getElementById('coopBossHpBar').style.width = `${coopState.bossHp}%`;
+  document.getElementById('coopScore').textContent = `${coopState.completedWords} / 10 題 (${coopState.score}分)`;
+
+  const badgeH = document.getElementById('badgeHanzi');
+  const badgeP = document.getElementById('badgePinyin');
+
+  if (coopState.gotHanzi) {
+    badgeH.textContent = '漢字：已接住 ✅';
+    badgeH.classList.add('done');
+  } else {
+    badgeH.textContent = '漢字：待接取 ❌';
+    badgeH.classList.remove('done');
+  }
+
+  if (coopState.gotPinyin) {
+    badgeP.textContent = '拼音：已接住 ✅';
+    badgeP.classList.add('done');
+  } else {
+    badgeP.textContent = '拼音：待接取 ❌';
+    badgeP.classList.remove('done');
+  }
+}
+</script>
+</body>
+</html>
