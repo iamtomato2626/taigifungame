@@ -408,15 +408,15 @@
           <strong>🐾 主題三：動物</strong>
           <span>杜蚓仔、𧌄蜅蠐、白翎鷥、膨鼠、麒麟鹿...</span>
         </div>
-        <div class="topic-pill selected" data-topic="飲食" onclick="selectTopic('飲食')">
+        <div class="topic-pill" data-topic="飲食" onclick="selectTopic('飲食')">
           <strong>🍽️ 主題四：飲食</strong>
           <span>泔糜仔、鮸魚、番薯簽、虎咬豬、鹹酸甜...</span>
         </div>
-        <div class="topic-pill selected" data-topic="休閒娛樂" onclick="selectTopic('休閒娛樂')">
+        <div class="topic-pill" data-topic="休閒娛樂" onclick="selectTopic('休閒娛樂')">
           <strong>🎮 主題五：休閒娛樂</strong>
           <span>蟧蜈車、拍滂泅、撚骰仔、漚戲拖棚、答喙鼓...</span>
         </div>
-        <div class="topic-pill selected" data-topic="形容用詞" onclick="selectTopic('形容用詞')">
+        <div class="topic-pill" data-topic="形容用詞" onclick="selectTopic('形容用詞')">
           <strong>💭 主題六：形容用詞</strong>
           <span>花巴哩貓、糜糜卯卯、躼躼長、淡薄仔、甜粅粅...</span>
         </div>
@@ -668,7 +668,6 @@ const DICTIONARY = [
   { topic: "天文地理", hanzi: "赤焱焱", pinyin: "tshiah-iānn-iānn", desc: "炎熱。常用於形容陽光酷烈。" },
   { topic: "天文地理", hanzi: "貓霧仔光", pinyin: "bâ-bū-á-kng", desc: "破曉時的天色。" },
   { topic: "天文地理", hanzi: "雺霧", pinyin: "bông-bū", desc: "霧。" },
-  { topic: "天文地理", hanzi: "海墘", pinyin: "hái-kînn", desc: "海邊、海濱、海岸。" },
   { topic: "天文地理", hanzi: "海漲", pinyin: "hái-tiòng", desc: "海嘯。 漲潮。" },
   { topic: "天文地理", hanzi: "起蛟龍", pinyin: "khí-kau-lîng", desc: "海嘯。" },
   { topic: "天文地理", hanzi: "洘旱", pinyin: "khó-huānn", desc: "大旱、旱災。" },
@@ -676,7 +675,6 @@ const DICTIONARY = [
   { topic: "天文地理", hanzi: "捲螺仔風", pinyin: "kńg-lê-á-hong", desc: "旋風、龍捲風。" },
   { topic: "天文地理", hanzi: "生鉎", pinyin: "senn-sian/sinn-sian", desc: "生鏽。" },
   { topic: "天文地理", hanzi: "爍爁", pinyin: "sih-nah", desc: "閃電。" },
-  { topic: "天文地理", hanzi: "霆雷公", pinyin: "tân-luî-kong", desc: "打雷。" },
   { topic: "天文地理", hanzi: "樹蔭", pinyin: "tshiū-ńg", desc: "樹下日光照不到的地方。" },
   { topic: "天文地理", hanzi: "搢風", pinyin: "tsìnn-hong", desc: "逆風。" },
   { topic: "天文地理", hanzi: "番仔油", pinyin: "huan-á-iû", desc: "煤油。" },
@@ -790,7 +788,6 @@ const DICTIONARY = [
   { topic: "動物", hanzi: "徛鵝", pinyin: "khiā-gô", desc: "企鵝。" },
   { topic: "動物", hanzi: "鸕鶿", pinyin: "lôo-tsî", desc: "魚鷹。" },
   { topic: "動物", hanzi: "烏面抐桮", pinyin: "oo-bīn-lā-pue", desc: "黑面琵鷺。" },
-  { topic: "動物", hanzi: "徛鵝", pinyin: "khiā-gô", desc: "企鵝。" },
   { topic: "動物", hanzi: "肚胿仔", pinyin: "tōo-kuai-á", desc: "蝌蚪。" },
   { topic: "動物", hanzi: "螿蜍", pinyin: "tsiunn-tsî", desc: "蟾蜍、癩蝦蟆。" },
   { topic: "動物", hanzi: "牛犅𨂿", pinyin: "gû-káng-uainnh", desc: "天牛。" },
@@ -812,7 +809,6 @@ const DICTIONARY = [
 { topic: "飲食", hanzi: "餡餅", pinyin: "ānn-piánn", desc: "包有綠豆沙、紅豆沙等餡料的油酥餅，可以當作禮餅。" },
 { topic: "飲食", hanzi: "肉拊", pinyin: "bah-hú", desc: "肉鬆。" },
 { topic: "飲食", hanzi: "肉燥飯", pinyin: "bah-sò-pn̄g", desc: "一種常見的小吃。" },
-{ topic: "飲食", hanzi: "墨賊仔", pinyin: "ba̍k-tsa̍t-á", desc: "烏賊。" },
 { topic: "飲食", hanzi: "饅頭", pinyin: "bán-thô", desc: "一種用麵粉發酵蒸發的食品。" },
 { topic: "飲食", hanzi: "麥芽糖", pinyin: "be̍h-gê-thn̂g", desc: "由含澱粉酶的麥芽使澱粉水解而成的糖。" },
 { topic: "飲食", hanzi: "米仔麩", pinyin: "bí-á-hu", desc: "將米穀炒熟以後研磨成粉，可以加水調和食用，是常見的傳統食品。" },
@@ -914,7 +910,6 @@ const DICTIONARY = [
 { topic: "休閒娛樂", hanzi: "上尺工", pinyin: "siāng-tshe-kong", desc: "標示在工尺譜上的音階名。" },
 { topic: "休閒娛樂", hanzi: "答喙鼓", pinyin: "tap-tshuì-kóo", desc: "鬥嘴或爭辯。 " },
 { topic: "休閒娛樂", hanzi: "七字仔", pinyin: "tshit-jī-á/tshit-lī-á", desc: "七字調。" },
-{ topic: "休閒娛樂", hanzi: "翕相", pinyin: "hip-siòng", desc: "拍照、攝影。" },
 
   // 【主題四：形容用詞】
 { topic: "形容用詞", hanzi: "密喌喌", pinyin: "ba̍t-tsiuh-tsiuh", desc: "緊緊的。形容非常緊密，沒有空隙。" },
@@ -976,7 +971,7 @@ const DICTIONARY = [
 { topic: "形容用詞", hanzi: "拍損", pinyin: "phah-sńg", desc: "浪費、蹧蹋。 可惜、惋惜。 小孩子夭折。" },
 { topic: "形容用詞", hanzi: "歪膏揤斜", pinyin: "uai-ko-tshi̍h-tshua̍h", desc: "歪七扭八。歪斜不正的樣子。" },
 { topic: "形容用詞", hanzi: "妥當", pinyin: "thò-tòng", desc: "穩當、適當。" },
-{ topic: "形容用詞", hanzi: " 黃錦錦        ", pinyin: "n̂g-gìm-gìm         ", desc: "形容顏色金黃。" },
+{ topic: "形容用詞", hanzi: " 黃錦錦", pinyin: "n̂g-gìm-gìm", desc: "形容顏色金黃。" },
 ];
 
 // ==================== 2. 裝置相容性檢測（手機無法遊玩模式三） ====================
